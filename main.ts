@@ -21,6 +21,15 @@ namespace SpriteKind {
 namespace StatusBarKind {
     export const down = StatusBarKind.create()
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile79`, function (sprite, location) {
+    if (info.score() >= 25) {
+        tiles.placeOnTile(mySprite, tiles.getTileLocation(49, 18))
+    } else {
+        timer.throttle("action", 1000, function () {
+            game.showLongText("Necesitas más puntos no todo el mnundo puede pasar por aquí es un mounstro lo que hay detras", DialogLayout.Top)
+        })
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (inicio == 0) {
         timer.throttle("action", 700, function () {
@@ -521,9 +530,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile15`, function (sprite, 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.imformation, function (sprite, otherSprite) {
     timer.throttle("texas", 1000, function () {
         if (PARRY == 1) {
-            game.showLongText("¡¡Wow!! ese ataque solo lo tienen los mejores   te explico: este ataque quita el doble de vida que tu ataque normal a cualquier BOSS pero cuidado es muy rapido asi que le tendras que dar a tiempo.", DialogLayout.Bottom)
+            game.showLongText("ya puedes ir a por el boss", DialogLayout.Bottom)
         } else {
-            game.showLongText("Dicen que si consigues muchos puntos aprenderás un ataque nuevo,                que interesante, ven a verme cuando lo tengaas.", DialogLayout.Bottom)
+            game.showLongText("consigue mas puntos para ir al boss", DialogLayout.Bottom)
         }
     })
 })
@@ -535,54 +544,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.UEBO, function (sprite, otherSpr
 sprites.onOverlap(SpriteKind.Player, SpriteKind.enemyjiji, function (sprite, otherSprite) {
     if (atackgodtier == 0) {
         timer.throttle("action", 1000, function () {
-            animation_when_hiting()
             scene.cameraShake(4, 500)
             info.changeLifeBy(-1)
+            animation_when_hiting()
+            timer.after(1100, function () {
+                ANIMATIONSPRITE1()
+            })
         })
-    }
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (PARRYTEXT >= 1) {
-        animation.runImageAnimation(
-        mySprite,
-        [img`
-            . . . . f f f f f f . . . . . . 
-            . . . f 3 3 3 3 3 3 f . . . . . 
-            . . . f 3 3 3 3 3 3 3 3 . . . . 
-            f f 5 5 5 5 5 3 3 3 e e f . . . 
-            d d 2 2 2 2 2 5 e e 3 3 3 f f f 
-            f d d d 3 3 3 d d 3 3 3 3 d d f 
-            f c c c 3 d d d d 3 d d 3 b d f 
-            f c c c d f d d d d f d b b b f 
-            f c c c d d d f f f d b b b f 8 
-            . f c c c d d d d d d b b b f . 
-            . . f f c c b b b b b b b f . . 
-            . . . . f c b b b b b b 8 . . . 
-            . . . . f c c c b b b f . . . . 
-            . . . . f 8 8 8 8 9 9 9 . . . . 
-            . . . . 8 8 . . . . 9 9 . . . . 
-            . . . . f . . . . . . f . . . . 
-            `,img`
-            . . 9 9 f 8 8 8 8 8 . . . 9 . . 
-            . 9 9 8 3 3 3 3 3 3 f 8 . 9 9 . 
-            . . 8 3 3 3 3 3 3 3 3 3 . . 9 . 
-            8 8 5 5 5 5 5 3 3 3 e e 8 . 9 . 
-            d d 2 2 2 2 2 5 e e 3 3 3 8 8 f 
-            f d d d 3 3 3 d d 3 3 3 3 d d f 
-            8 c c c 3 d d d d 3 d d 3 b d f 
-            8 c c c d 8 d d d d 8 d b b b f 
-            8 c c c d d d 4 4 4 d b b b f 8 
-            . f c c c d d d 4 4 d b b b f . 
-            9 . f f c c b b b b b b b f . . 
-            . 9 9 . 8 c b b b b b b 8 . . . 
-            . . 9 9 8 c c c b b b f . . . . 
-            . . . 9 f 8 8 8 8 9 9 9 . . . . 
-            . . . 9 8 8 . . . . 9 9 . . . . 
-            . . . . f . . . . . . f . . . . 
-            `],
-        100,
-        false
-        )
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.cartel2, function (sprite, otherSprite) {
@@ -659,6 +627,9 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
     )
     llave.setPosition(318, 245)
     game.showLongText("COJER LA LLAVE", DialogLayout.Bottom)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile81`, function (sprite, location) {
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(49, 12))
 })
 function animation_when_hiting () {
     characterAnimations.loopFrames(
@@ -930,6 +901,9 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSp
             animation_when_hiting()
             scene.cameraShake(4, 500)
             info.changeLifeBy(-1)
+            timer.after(1100, function () {
+                ANIMATIONSPRITE1()
+            })
         })
     }
 })
@@ -1199,7 +1173,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile62`, function (sprite, 
         f e 2 2 2 8 8 8 9 9 . . f f f . 
         . f f . . f . . . f . . . . . . 
         `, SpriteKind.Player)
-    mySprite.setPosition(324, 1784)
+    mySprite.setPosition(326, 1784)
     controller.moveSprite(mySprite, 150, 150)
     scene.cameraFollowSprite(mySprite)
     scene.setBackgroundImage(img`
@@ -3371,7 +3345,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile64`, function (sprite, 
     tiles.setCurrentTilemap(tilemap`nivel16`)
     scene.cameraFollowSprite(mySprite)
     mySprite.setPosition(318, 245)
-    characterAnimations.loopFrames(
+    animation.runImageAnimation(
     mySprite,
     [img`
         .....ffffffffffffffff...........
@@ -3573,7 +3547,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile64`, function (sprite, 
         ................................
         `],
     200,
-    characterAnimations.rule(Predicate.NotMoving)
+    false
     )
     timer.after(1200, function () {
         inicio = 0
@@ -3581,7 +3555,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile64`, function (sprite, 
         BARRA()
         boss_vivo = 1
         controller.moveSprite(mySprite, 150, 150)
-        inicio = 0
         atackgodtier = 0
         game.showLongText("No te llevaras a la princesa!!!! ", DialogLayout.Bottom)
         BOSS = sprites.create(img`
@@ -4087,6 +4060,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile70`, function (sprite, 
 })
 let viduela: Sprite = null
 let projectile: Sprite = null
+let PARRYTEXT = 0
 let statusbar2: StatusBarSprite = null
 let bossbatlesong = 0
 let information: Sprite = null
@@ -4117,7 +4091,6 @@ let CASTILLO: Sprite = null
 let llave: Sprite = null
 let boss_vivo = 0
 let cartel_2: Sprite = null
-let PARRYTEXT = 0
 let PARRY = 0
 let BOSS: Sprite = null
 let forest = 0
@@ -4199,7 +4172,7 @@ game.onUpdate(function () {
             if (info.score() >= 25) {
                 PARRYTEXT = 1
                 PARRY = 1
-                game.showLongText("HAS APRENDIDO NUEVA TECNICA seguro que alguien en el bosque sabra de que va preguntale si quieres saber.", DialogLayout.Top)
+                game.showLongText("Ya puedes ir a salvar a la PRINCESA", DialogLayout.Top)
             }
         }
     }
