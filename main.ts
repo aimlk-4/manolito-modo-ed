@@ -528,19 +528,62 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.imformation, function (sprite, o
     })
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.UEBO, function (sprite, otherSprite) {
-    info.changeScoreBy(5)
+    game.splash("¡¡5 puntos!!")
     sprites.destroy(otherSprite)
+    info.changeScoreBy(5)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.enemyjiji, function (sprite, otherSprite) {
     if (atackgodtier == 0) {
         timer.throttle("action", 1000, function () {
+            animation_when_hiting()
             scene.cameraShake(4, 500)
             info.changeLifeBy(-1)
         })
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.splash(mySprite.x, mySprite.y)
+    if (PARRYTEXT >= 1) {
+        animation.runImageAnimation(
+        mySprite,
+        [img`
+            . . . . f f f f f f . . . . . . 
+            . . . f 3 3 3 3 3 3 f . . . . . 
+            . . . f 3 3 3 3 3 3 3 3 . . . . 
+            f f 5 5 5 5 5 3 3 3 e e f . . . 
+            d d 2 2 2 2 2 5 e e 3 3 3 f f f 
+            f d d d 3 3 3 d d 3 3 3 3 d d f 
+            f c c c 3 d d d d 3 d d 3 b d f 
+            f c c c d f d d d d f d b b b f 
+            f c c c d d d f f f d b b b f 8 
+            . f c c c d d d d d d b b b f . 
+            . . f f c c b b b b b b b f . . 
+            . . . . f c b b b b b b 8 . . . 
+            . . . . f c c c b b b f . . . . 
+            . . . . f 8 8 8 8 9 9 9 . . . . 
+            . . . . 8 8 . . . . 9 9 . . . . 
+            . . . . f . . . . . . f . . . . 
+            `,img`
+            . . 9 9 f 8 8 8 8 8 . . . 9 . . 
+            . 9 9 8 3 3 3 3 3 3 f 8 . 9 9 . 
+            . . 8 3 3 3 3 3 3 3 3 3 . . 9 . 
+            8 8 5 5 5 5 5 3 3 3 e e 8 . 9 . 
+            d d 2 2 2 2 2 5 e e 3 3 3 8 8 f 
+            f d d d 3 3 3 d d 3 3 3 3 d d f 
+            8 c c c 3 d d d d 3 d d 3 b d f 
+            8 c c c d 8 d d d d 8 d b b b f 
+            8 c c c d d d 4 4 4 d b b b f 8 
+            . f c c c d d d 4 4 d b b b f . 
+            9 . f f c c b b b b b b b f . . 
+            . 9 9 . 8 c b b b b b b 8 . . . 
+            . . 9 9 8 c c c b b b f . . . . 
+            . . . 9 f 8 8 8 8 9 9 9 . . . . 
+            . . . 9 8 8 . . . . 9 9 . . . . 
+            . . . . f . . . . . . f . . . . 
+            `],
+        100,
+        false
+        )
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.cartel2, function (sprite, otherSprite) {
     cartel_2.sayText("Arriba: Castillo Izquierda: Bosque     Abajo: Pueblo", 500, false)
@@ -617,9 +660,274 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
     llave.setPosition(318, 245)
     game.showLongText("COJER LA LLAVE", DialogLayout.Bottom)
 })
+function animation_when_hiting () {
+    characterAnimations.loopFrames(
+    mySprite,
+    [img`
+        f f f f f . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . f f f f . . . 
+        . . . . . . . . f 3 3 3 3 f f . 
+        . f f f . . . f 3 e 3 3 3 3 3 f 
+        . . . . . . f 3 3 3 e e e 3 3 f 
+        . . . . . . f 3 3 3 3 3 d d f . 
+        . . . . . . f 3 3 3 d 3 d f . . 
+        . . . . . . . f f 3 d d d d f . 
+        . . . . . . f b b c c f f f f . 
+        . . . . f f b b b c c c f d f . 
+        . . . f d b b b b c c c c c f . 
+        . . . f 5 5 5 5 c c c f f f . . 
+        . . . f 2 2 2 8 c c c . . . . . 
+        f . . . . 8 8 8 9 f 9 9 . . . . 
+        . . . . f . . . . . . f f . . . 
+        `,img`
+        f f . . f . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . f f f f f . . 
+        . f f . . f f . f 3 3 3 3 f f . 
+        . . . . . . . f e 3 3 3 3 3 3 f 
+        . . . . . . f 3 3 e e e e 3 3 f 
+        . . . . . . f 3 3 3 3 d d d 3 f 
+        . . . . . . f 3 3 d 3 d d f . . 
+        . . . . . . . f 3 d d d d d f . 
+        . . . . . . . . f b b c f f . . 
+        . . . . . . . f c c b b c f . . 
+        . . . . . . . f c c b b c f . . 
+        . . . . . . . f c c 5 5 5 5 5 f 
+        f f . . . . . f f 8 2 2 2 f . . 
+        . . . . . . . . f 8 8 8 f . . . 
+        . . . . . . . . f f 8 f f . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        f f f . . . . . . . . . . . . . 
+        . . . . . . . f f f f . . . . . 
+        . . . . . . f 3 3 3 3 f f . . . 
+        . . . . . f 3 3 3 3 3 3 3 f . . 
+        . . . . f 3 e 3 3 3 3 3 3 f . . 
+        . . . f 3 3 3 e e e e d 3 f . . 
+        . . . f 3 3 3 3 3 3 3 d 3 f . . 
+        . . . . f 3 3 d 3 d d f . . . . 
+        . . . . f 3 3 d d d d d f . . . 
+        . . . . . f f 3 3 c 5 f . . . . 
+        . . . f f c c b b b c f . . . . 
+        . . f c c c c c b b b b f f f . 
+        . f e e c f c c c f b d 5 5 5 f 
+        . f e d f 9 9 8 8 c f d 2 2 f . 
+        . . f f 9 9 f f 8 8 8 . f f . . 
+        . . . f . . . . . . . f . . . . 
+        `],
+    100,
+    characterAnimations.rule(Predicate.MovingRight)
+    )
+    characterAnimations.loopFrames(
+    mySprite,
+    [img`
+        . . . . . . . f f f f . . . . . 
+        . . . f f f f f f f f f . . . . 
+        . . . f f f f f 3 3 3 f f f . . 
+        . . f e 3 3 3 3 3 3 3 3 f f . . 
+        . f f 3 e 3 3 3 3 3 3 e f f . . 
+        . f 3 3 3 3 e e 3 e e 3 3 f . . 
+        . f 3 3 3 d d d 3 d d 3 3 f . . 
+        . f f 3 d d d d d 3 d d 3 f . . 
+        . . f 3 d f d d d d f d 3 f . . 
+        . f c c d d d d f d d d b b f . 
+        f c c b b 5 c c 9 2 c c c b b f 
+        f b b b f c 5 2 2 b c c c b b f 
+        f b b f f c c c c b f c b b b f 
+        f e 5 5 5 5 5 c c b . f e e d f 
+        f e 2 2 2 8 8 8 9 9 . . f f f . 
+        . f f . . f . . . f . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . f f f . . . . . 
+        . . . f f f f f 3 3 3 f . . . . 
+        . . f e 3 3 3 3 3 3 3 3 f . . . 
+        . f f 3 e 3 3 3 3 3 3 e f f . . 
+        . f 3 3 3 3 e e 3 e e 3 3 f . . 
+        . f 3 3 3 d d d 3 d d 3 3 f . . 
+        . f f 3 d d d d d 3 d d 3 f . . 
+        . . f 3 d f d d d d f d 3 f . . 
+        . f c c d d d d f d d d b f . . 
+        f c c b b 5 c c 9 2 c c c b f . 
+        f b b b f c 5 2 2 b c c c b f . 
+        f b b f f c c c c b f c c b b f 
+        f b b f f c c c c b f c b b b f 
+        f e 5 5 5 5 5 8 c b . f e e d f 
+        f e 2 2 2 8 8 8 9 9 . . f f f . 
+        . f f . . f . . . f . . . . . . 
+        `],
+    100,
+    characterAnimations.rule(Predicate.NotMoving)
+    )
+    characterAnimations.loopFrames(
+    mySprite,
+    [img`
+        . . . . . . . . f f f . . . . . 
+        . . . f f f f f 3 3 3 f . . . . 
+        . . f e 3 3 3 3 3 3 3 3 f . . . 
+        . f f 3 e 3 3 3 3 3 3 e f f . . 
+        . f 3 3 3 3 e e 3 e e 3 3 f . . 
+        . f 3 3 3 3 3 3 3 3 3 3 3 f . . 
+        . f f 3 3 3 3 3 3 3 3 3 3 f . . 
+        . . f 3 3 3 3 3 3 3 3 3 3 f . . 
+        . . . f 3 3 3 3 3 3 3 d f . . . 
+        . . f b b c 3 3 c c c c f . . . 
+        . f b b b c c c c b c f c f . . 
+        f b b b f c c c c b f c b b f . 
+        f b b f f c c c c b f f e e f . 
+        f e d f . 8 8 8 9 9 f . f f . . 
+        . f f . . f f . . f . . . . . . 
+        . . . . . f f . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . f f f . . . . . 
+        . . . f f f f f 3 3 3 f . . . . 
+        . . f e 3 3 3 3 3 3 3 3 f . . . 
+        . f f 3 e 3 3 3 3 3 3 e f f . . 
+        . f 3 3 3 3 e e 3 e e 3 3 f . . 
+        . f 3 3 3 3 3 3 3 3 3 3 3 f . . 
+        . f f 3 3 3 3 3 3 3 3 3 3 f . . 
+        . . f 3 3 3 3 3 3 3 3 3 3 f . . 
+        . f c c 3 3 3 3 3 3 3 3 b f . . 
+        f c c b b c c 3 3 3 c c b b f . 
+        f b b b f c c c c f c c b b f . 
+        f d d f . c c c c b f e e d f . 
+        f f f . . 8 8 8 9 9 f f f f . . 
+        . . . . . f . . f f . . . . . . 
+        . . . . . f . . f f . . . . . . 
+        . . . . . . . . f f . . . . . . 
+        `],
+    100,
+    characterAnimations.rule(Predicate.MovingUp)
+    )
+    characterAnimations.loopFrames(
+    mySprite,
+    [img`
+        . . . . . . . . . . . . f f f f 
+        . . . . . . . . . . . . . . . . 
+        . . . f f f f . . . . . . . . . 
+        . f f 3 3 3 3 f . . . . . . . . 
+        f 3 3 3 3 3 e 3 f . . . . . . . 
+        f 3 3 e e e 3 3 3 f . . . . . . 
+        . f d d 3 3 3 3 3 f . f f . . . 
+        . . f d 3 d 3 3 3 f . . . . . . 
+        . f d d d d 3 f f . . . . . . . 
+        . f f f f c c b b f . . . . . . 
+        . f d f c c c b b b f f . . . . 
+        . f c c c c c b b b b d f . . . 
+        . . f f f c c c 5 5 5 5 f . . . 
+        . . . . . c c c 8 2 2 2 f . . . 
+        . . . . 9 9 f 9 8 8 8 f f . . . 
+        . . . f . . . . . . f . . . . f 
+        `,img`
+        . . . . . . . . . . . . . . . f 
+        . . . . . . . . . . . . . . . . 
+        . . f f f f f . . . . . . . . . 
+        . f f 3 3 3 3 f . . . . . . . . 
+        f 3 3 3 3 3 3 e f . . . . . . . 
+        f 3 3 e e e e 3 3 f . f f f . . 
+        f 3 d d d 3 3 3 3 f . . . . . . 
+        . . f d d 3 d 3 3 f . . . . . . 
+        . f d d d d d 3 f . . . . . . . 
+        . . f f c b b f . . . . . . . . 
+        . . f c b b c c f . . . . . . . 
+        . . f c b b c c f . . . . . . . 
+        . 5 5 5 5 5 c c f . . . . . . . 
+        . . f 2 2 2 8 f f . . . . . . . 
+        . . . f 8 8 8 f . . . . . . . . 
+        . . . f f 8 f f . . . . f f . f 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . f f f . f 
+        . . . . . f f f f . . . . . . . 
+        . . . f f 3 3 3 3 f . . . . . . 
+        . . f 3 3 3 3 3 3 3 f . . . . . 
+        . . f 3 3 3 3 3 3 e 3 f . . . . 
+        . . f 3 d e e e e 3 3 3 f . . . 
+        . . f 3 d 3 3 3 3 3 3 3 f . . . 
+        . . . . f d d 3 d 3 3 f . . f f 
+        . . . f d d d d d 3 3 f . . . . 
+        . . . . f 5 c 3 3 f f . . . . . 
+        . . . . f c b b b c c f f . . . 
+        f f f f b b b b c c c c c f . . 
+        f 5 5 5 d b f c c c f c e e f . 
+        f f 2 2 d f c 8 8 9 9 f d e f . 
+        . f f f . 8 8 8 f f 9 9 f f . . 
+        . . . . f . . . . . . f . . . f 
+        `],
+    100,
+    characterAnimations.rule(Predicate.MovingLeft)
+    )
+}
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
     if (atackgodtier == 0) {
         timer.throttle("action", 1000, function () {
+            animation_when_hiting()
             scene.cameraShake(4, 500)
             info.changeLifeBy(-1)
         })
@@ -3039,6 +3347,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile64`, function (sprite, 
         bossbatlesong = 1
         inicio = 1
         sprites.destroy(information)
+        sprites.destroy(mySprite3)
         controller.moveSprite(mySprite, 0, 0)
         sprites.destroyAllSpritesOfKind(SpriteKind.Player)
         mySprite = sprites.create(img`
@@ -3731,8 +4040,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.CARTEL3, function (sprite, other
     CARTEL3.sayText("BOSQUE:precaución zona no controlada", 500, false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.UEBODEORO, function (sprite, otherSprite) {
-    info.changeScoreBy(25)
+    game.splash("¡¡10 puntos!!")
     sprites.destroy(otherSprite)
+    info.changeScoreBy(10)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.carta, function (sprite, otherSprite) {
     timer.throttle("action", 500, function () {
@@ -3783,7 +4093,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile70`, function (sprite, 
 })
 let viduela: Sprite = null
 let projectile: Sprite = null
-let PARRYTEXT = 0
 let statusbar2: StatusBarSprite = null
 let bossbatlesong = 0
 let information: Sprite = null
@@ -3814,12 +4123,14 @@ let CASTILLO: Sprite = null
 let llave: Sprite = null
 let boss_vivo = 0
 let cartel_2: Sprite = null
+let PARRYTEXT = 0
 let PARRY = 0
 let BOSS: Sprite = null
 let forest = 0
 let manolosworld = 0
 let statusbar: StatusBarSprite = null
 let atackgodtier = 0
+let mySprite3: Sprite = null
 let inicio = 0
 let mySprite: Sprite = null
 tiles.setCurrentTilemap(tilemap`nivel14`)
@@ -3843,7 +4154,7 @@ mySprite = sprites.create(img`
     `, SpriteKind.Player)
 controller.moveSprite(mySprite, 150, 150)
 inicio = 1
-let mySprite3 = sprites.create(img`
+mySprite3 = sprites.create(img`
     f f f f f f f f f f f f f f f f 
     f e e e e e e e e e e e e e e f 
     f 1 1 1 1 1 1 1 1 1 1 1 1 1 e f 
@@ -3881,6 +4192,15 @@ game.onUpdate(function () {
 })
 game.onUpdate(function () {
     if (manolosworld == 1) {
+        if (PARRYTEXT == 0) {
+            if (info.score() >= 25) {
+                PARRYTEXT = 1
+                PARRY = 1
+                game.showLongText("HAS APRENDIDO NUEVA TECNICA seguro que alguien en el bosque sabra de que va preguntale si quieres saber.", DialogLayout.Top)
+            }
+        }
+    }
+    if (forest == 1) {
         if (PARRYTEXT == 0) {
             if (info.score() >= 25) {
                 PARRYTEXT = 1
